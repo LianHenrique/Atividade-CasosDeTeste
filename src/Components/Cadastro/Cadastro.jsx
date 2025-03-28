@@ -10,19 +10,6 @@ const Cadastro = () => {
 
   const navigate = useNavigate();
 
-  const changeNome = (event) => {
-    useNome(event.target.value);
-  }
-  const changeEmail = (event, use) => {
-    useEmail(event.target.value);
-  }
-  const changeSenha = (event, use) => {
-    useSenha(event.target.value);
-  }
-  const changeConfirmarSenha = (event, use) => {
-    useSenhaConfirma(event.target.value);
-  }
-
   const temNumero = (str) => {
     // Expressão regular para verificar se a string contém números
     return /\d/.test(str);
@@ -62,10 +49,10 @@ const Cadastro = () => {
     <div className={styles.body}>
       <h1 className={styles.title}>Cadastro</h1>
       <div className={styles.baseInput}>
-        <input className={styles.input} onChange={changeNome} type="text" placeholder="Nome"/>
-        <input className={styles.input} onChange={changeEmail} type="text" placeholder="E-mail"/>
-        <input className={styles.input} onChange={changeSenha} type="password" placeholder="Senha"/>
-        <input className={styles.input} onChange={changeConfirmarSenha} type="password" placeholder="Confirmação de Senha"/>
+        <input className={styles.input} onChange={(event) => useNome(event.target.value)} type="text" placeholder="Nome"/>
+        <input className={styles.input} onChange={(event) => useEmail(event.target.value)} type="text" placeholder="E-mail"/>
+        <input className={styles.input} onChange={(event) => useSenha(event.target.value)} type="password" placeholder="Senha"/>
+        <input className={styles.input} onChange={(event) => useSenhaConfirma(event.target.value)} type="password" placeholder="Confirmação de Senha"/>
         <button className={styles.button} onClick={() => navigate('/')}>Retornar</button>
         <button className={styles.button} onClick={cadastrar}>Cadastrar</button>
       </div>
