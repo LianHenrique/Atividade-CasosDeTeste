@@ -26,23 +26,32 @@ const Cadastro = () => {
     // Verifica se o nome esta vazio ou contem numeros
     if (temNumero(nome) || isEmpty(nome)){
       alert("Nome invalido")
+      return false;
     }
     // Verifica se o email é valido
     if (validarEmail(email) != true){
       alert("Email invalido")
+      return false;
     }
     // Verifica se a confirmação foi efetuada corretamente
     if (senha != senhaConfirma) {
       alert("Confirmação de senha invalida")
+      return false;
     }
     // Verifica de a senha não esta vazia
     else if(isEmpty(senha)){
       alert("Senha invalida")
+      return false;
     }
     // Verifica o tamanho da senha
     else if(senha.length < 8){
       alert("Senha Fraca (8 characteres ou mais)")
+      return false;
     }
+    if(cadastrar){
+      navigate('/');
+    }
+    return true;
   }
 
   return (
