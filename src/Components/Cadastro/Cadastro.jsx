@@ -11,8 +11,8 @@ const Cadastro = () => {
         <input className={styles.input} type="text" placeholder="E-mail"/>
         <input className={styles.input} type="password" placeholder="Senha"/>
         <input className={styles.input} type="password" placeholder="Confirmação de Senha"/>
-        <button className={styles.button}>Cadastrar</button>
         <button className={styles.button} onClick={() => navigate('/')}>Retornar</button>
+        <button className={styles.button}>Cadastrar</button>
       </div>
     </div>
   )
