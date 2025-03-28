@@ -1,4 +1,24 @@
-:root{
-    background-color: black;
-    color: white;
+.body{
+    background-color: rgb(160, 160, 160, 0.8);
+    height: 500px;
+    width: 500px;
+    border-radius: 25px ;
+    margin: 10% auto;
+}
+
+.title{
+    text-align: center;
+    padding-top: 20px;
+}
+
+.baseInput{
+    text-align: center;
+}
+
+.input{
+    padding: 10px;
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
 }
