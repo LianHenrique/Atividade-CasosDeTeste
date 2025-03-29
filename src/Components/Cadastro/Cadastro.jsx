@@ -62,7 +62,7 @@ const Cadastro = () => {
         <input className={styles.input} onChange={(event) => useEmail(event.target.value)} type="text" placeholder="E-mail"/>
         <input className={styles.input} onChange={(event) => useSenha(event.target.value)} type="password" placeholder="Senha"/>
         <input className={styles.input} onChange={(event) => useSenhaConfirma(event.target.value)} type="password" placeholder="Confirmação de Senha"/>
-        <button className={styles.button} onClick={() => navigate('/')}>Retornar</button>
+        <button className={styles.button} onClick={() => navigate('/')}>Voltar</button>
         <button className={styles.button} onClick={cadastrar}>Cadastrar</button>
       </div>
     </div>
