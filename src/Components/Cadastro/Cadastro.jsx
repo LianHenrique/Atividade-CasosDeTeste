@@ -22,14 +22,13 @@ const Cadastro = () => {
   };
 
   const cadastrar = () => {
-    const isEmpty = (str) => str.trim() === "";
     // Verifica se o nome esta vazio ou contem numeros
-    if (temNumero(nome) || isEmpty(nome)){
+    if (temNumero(nome) || nome === ""){
       alert("Nome invalido")
       return false;
     }
     // Verifica se o email é valido
-    if (validarEmail(email) != true){
+    if (validarEmail(email) != true || email === ""){
       alert("Email invalido")
       return false;
     }
@@ -39,7 +38,7 @@ const Cadastro = () => {
       return false;
     }
     // Verifica de a senha não esta vazia
-    else if(isEmpty(senha)){
+    else if(senha === ""){
       alert("Senha invalida")
       return false;
     }
