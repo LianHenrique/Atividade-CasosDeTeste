@@ -21,28 +21,37 @@ const Cadastro = () => {
     return regex.test(email);
   };
 
-  const cadastrar = () => {
+  const cadastrarVerifica = () => {
     const isEmpty = (str) => str.trim() === "";
     // Verifica se o nome esta vazio ou contem numeros
     if (temNumero(nome) || isEmpty(nome)){
       alert("Nome invalido")
+      return false;
     }
     // Verifica se o email é valido
     if (validarEmail(email) != true){
       alert("Email invalido")
+      return false;
     }
     // Verifica se a confirmação foi efetuada corretamente
     if (senha != senhaConfirma) {
       alert("Confirmação de senha invalida")
+      return false;
     }
     // Verifica de a senha não esta vazia
     else if(isEmpty(senha)){
       alert("Senha invalida")
+      return false;
     }
     // Verifica o tamanho da senha
     else if(senha.length < 8){
       alert("Senha Fraca (8 characteres ou mais)")
+      return false;
     }
+    if(cadastrarVerifica){
+      navigate('/');
+    }
+    return true;
   }
 
   return (
@@ -54,7 +63,7 @@ const Cadastro = () => {
         <input className={styles.input} onChange={(event) => useSenha(event.target.value)} type="password" placeholder="Senha"/>
         <input className={styles.input} onChange={(event) => useSenhaConfirma(event.target.value)} type="password" placeholder="Confirmação de Senha"/>
         <button className={styles.button} onClick={() => navigate('/')}>Retornar</button>
-        <button className={styles.button} onClick={cadastrar}>Cadastrar</button>
+        <button className={styles.button} onClick={cadastrarVerifica}>Cadastrar</button>
       </div>
     </div>
   )
