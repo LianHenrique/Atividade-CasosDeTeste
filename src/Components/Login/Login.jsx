@@ -27,11 +27,12 @@ const Login = () => {
     const usuarioExiste = user.find(
       (u) => u.email === emailInput && u.senha === senhaInput
     );
-
+    
     if (!usuarioExiste) {
       alert("Login inválido");
-    } else {
-      alert("Login concluído");
+    }
+    else{
+      alert("Bem vindo "+usuarioExiste.nome);
     }
   };
 

@@ -14,9 +14,10 @@ const Cadastro = () => {
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setconfirmarSenha] = useState("");
 
+  // Uma atualização feita quando a lista user muda de valor
   useEffect(() => {
     localStorage.setItem("usuarios", JSON.stringify(user));
-  });
+  },[user]);
 
   const navigate = useNavigate();
 
@@ -59,18 +60,23 @@ const Cadastro = () => {
       return false;
     }
 
+    // Adiciona o novo usuario como um item
     const newUser = {
+      nome: nome,
       email: email,
       senha: senha
     };
 
+    // Adiciona o newUser a lista user
     const updatedUsers = [...user, newUser];
 
+    // Faz a alteração na lista
     setUser(updatedUsers);
 
-    console.log("Usuários cadastrados:", updatedUsers);
+    alert(nome+ " cadastrado")
 
-    navigate("/", { state: { usuarios: updatedUsers } });
+    // Navega até a tela de login
+    navigate("/");
 
   return true;
 }
@@ -84,11 +90,13 @@ const Cadastro = () => {
         </h1>
       <form 
       className={styles.baseInput}
+      // Faz com que a tela não atualize
       onSubmit={(e) => e.preventDefault()}>
 
         <input 
         className={styles.input} 
         onChange={(e) => {
+          // Coleta o nome digitado
           setNome(e.target.value)
         }} 
         type="text" 
@@ -97,6 +105,7 @@ const Cadastro = () => {
         <input 
         className={styles.input} 
         onChange={(e) => {
+          // Coleta o email digitado
           setEmail(e.target.value)
         }} 
         type="text" 
@@ -105,6 +114,7 @@ const Cadastro = () => {
         <input 
         className={styles.input} 
         onChange={(e) => {
+          // Coleta a senha digitada
           setSenha(e.target.value)
         }} 
         type="password" 
@@ -113,6 +123,7 @@ const Cadastro = () => {
         <input 
         className={styles.input} 
         onChange={(e) => {
+          // Coleta da confirmação de senha
           setconfirmarSenha(e.target.value)
         }} 
         type="password" 
@@ -120,7 +131,8 @@ const Cadastro = () => {
 
         <button 
         className={styles.button} 
-        onClick={() => navigate("/", { state: { usuarios: user } })}>
+        // Navegação para tela login
+        onClick={() => navigate("/")}>
           Voltar
         </button>
 
