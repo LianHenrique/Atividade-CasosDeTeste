@@ -1,77 +1,77 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from "react";
+import styles from "./Login.module.css"
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  // Estado para armazenar os valores dos campos
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erroEmail, setErroEmail] = useState('');
-  const [erroSenha, setErroSenha] = useState('');
 
-  // Função para validar os campos de login
-  const validarLogin = () => {
-    let validado = true;
+  const [user, setUser] = useState([]);
 
-    // Limpar erros anteriores
-    setErroEmail('');
-    setErroSenha('');
-
-    // Validação de e-mail
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      setErroEmail('E-mail inválido');
-      validado = false;
+  useEffect(() => {
+    const savedUsers = localStorage.getItem("usuarios");
+    if (savedUsers) {
+      setUser(JSON.parse(savedUsers));
     }
+  }, []);
 
-    // Validação de senha
-    if (!senha || senha.length < 6) {
-      setErroSenha('A senha deve ter pelo menos 6 caracteres');
-      validado = false;
-    }
+  const [emailInput, setEmailInput] = useState();
+  const [senhaInput, setSenhaInput] = useState();
 
-    return validado;
-  };
+  const navegate = useNavigate();
 
   // Função chamada no envio do formulário
   const handleLogin = (e) => {
     e.preventDefault();
+  };
 
-    if (validarLogin()) {
-      // Aqui você pode adicionar a lógica para enviar os dados de login
-      console.log('E-mail:', email);
-      console.log('Senha:', senha);
+  const logar = () => {
+    const usuarioExiste = user.find(
+      (u) => u.email === emailInput && u.senha === senhaInput
+    );
+
+    if (!usuarioExiste) {
+      alert("Login inválido");
+    } else {
+      alert("Login concluído");
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className={styles.body}>
+      <h1 className={styles.title}>Login</h1>
+      <form className={styles.baseInput} onSubmit={handleLogin}>
         <div>
-          <label htmlFor="email">E-mail</label>
           <input
+            className={styles.input} 
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Digite seu e-mail"
-            required
+            onChange={(e) => setEmailInput(e.target.value)}
+            placeholder="E-mail"
           />
-          {erroEmail && <span className="error">{erroEmail}</span>}
         </div>
 
         <div>
-          <label htmlFor="senha">Senha</label>
           <input
+            className={styles.input} 
             type="password"
             id="senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            placeholder="Digite sua senha"
-            required
+            onChange={(e) => setSenhaInput(e.target.value)}
+            placeholder="Senha"
           />
-          {erroSenha && <span className="error">{erroSenha}</span>}
         </div>
-
-        <button type="submit">Entrar</button>
+        <button 
+        className={styles.button} 
+        type="submit" 
+        onClick={() => {
+          navegate("/cadastro")
+        }}>
+          Cadastrar
+        </button>
+        <button 
+        className={styles.button} 
+        type="submit"
+        onClick={logar}>
+          Entrar
+        </button>
       </form>
     </div>
   );

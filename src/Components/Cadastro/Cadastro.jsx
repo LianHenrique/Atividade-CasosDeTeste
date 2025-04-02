@@ -1,12 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Cadastro.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Cadastro = () => {
-  const [nome, useNome] = useState("");
-  const [email, useEmail] = useState("");
-  const [senha, useSenha] = useState("");
-  const [senhaConfirma, useSenhaConfirma] = useState("");
+
+  const [user, setUser] = useState(() => {
+    const savedUsers = localStorage.getItem("usuarios");
+    return savedUsers ? JSON.parse(savedUsers) : [];
+  });
+  
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setconfirmarSenha] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("usuarios", JSON.stringify(user));
+  });
 
   const navigate = useNavigate();
 
@@ -22,6 +32,7 @@ const Cadastro = () => {
   };
 
   const cadastrar = () => {
+
     // Verifica se o nome esta vazio ou contem numeros
     if (temNumero(nome) || nome === ""){
       alert("Nome invalido")
@@ -33,7 +44,7 @@ const Cadastro = () => {
       return false;
     }
     // Verifica se a confirmação foi efetuada corretamente
-    if (senha != senhaConfirma) {
+    if (senha != confirmarSenha) {
       alert("Confirmação de senha invalida")
       return false;
     }
@@ -47,25 +58,78 @@ const Cadastro = () => {
       alert("Senha Fraca (8 characteres ou mais)")
       return false;
     }
-    if(cadastrar){
-        navigate('/');
-    }
+
+    const newUser = {
+      email: email,
+      senha: senha
+    };
+
+    const updatedUsers = [...user, newUser];
+
+    setUser(updatedUsers);
+
+    console.log("Usuários cadastrados:", updatedUsers);
+
+    navigate("/", { state: { usuarios: updatedUsers } });
+
   return true;
 }
 
   return (
-    <div className={styles.body}>
-      <h1 className={styles.title}>Cadastro</h1>
-      <div className={styles.baseInput}>
-        <input className={styles.input} onChange={(event) => useNome(event.target.value)} type="text" placeholder="Nome"/>
-        <input className={styles.input} onChange={(event) => useEmail(event.target.value)} type="text" placeholder="E-mail"/>
-        <input className={styles.input} onChange={(event) => useSenha(event.target.value)} type="password" placeholder="Senha"/>
-        <input className={styles.input} onChange={(event) => useSenhaConfirma(event.target.value)} type="password" placeholder="Confirmação de Senha"/>
-        <button className={styles.button} onClick={() => navigate('/')}>Retornar</button>
-        <button className={styles.button} onClick={cadastrarVerifica}>Cadastrar</button>
-        <button className={styles.button} onClick={() => navigate('/')}>Voltar</button>
-        <button className={styles.button} onClick={cadastrar}>Cadastrar</button>
-      </div>
+    <div 
+    className={styles.body}>
+      <h1 
+      className={styles.title}>
+        Cadastro
+        </h1>
+      <form 
+      className={styles.baseInput}
+      onSubmit={(e) => e.preventDefault()}>
+
+        <input 
+        className={styles.input} 
+        onChange={(e) => {
+          setNome(e.target.value)
+        }} 
+        type="text" 
+        placeholder="Nome"/>
+
+        <input 
+        className={styles.input} 
+        onChange={(e) => {
+          setEmail(e.target.value)
+        }} 
+        type="text" 
+        placeholder="E-mail"/>
+
+        <input 
+        className={styles.input} 
+        onChange={(e) => {
+          setSenha(e.target.value)
+        }} 
+        type="password" 
+        placeholder="Senha"/>
+
+        <input 
+        className={styles.input} 
+        onChange={(e) => {
+          setconfirmarSenha(e.target.value)
+        }} 
+        type="password" 
+        placeholder="Confirmação de Senha"/>
+
+        <button 
+        className={styles.button} 
+        onClick={() => navigate("/", { state: { usuarios: user } })}>
+          Voltar
+        </button>
+
+        <button 
+        className={styles.button} 
+        onClick={cadastrar}>
+          Cadastrar
+        </button>
+      </form>
     </div>
   )
 }
