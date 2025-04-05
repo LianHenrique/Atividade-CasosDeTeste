@@ -21,6 +21,13 @@ const Cadastro = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const savedUsers = localStorage.getItem("usuarios");
+    if (savedUsers) {
+      setUser(JSON.parse(savedUsers));
+    }
+  }, []);
+
   const temNumero = (str) => {
     // Expressão regular para verificar se a string contém números
     return /\d/.test(str);
@@ -33,6 +40,16 @@ const Cadastro = () => {
   };
 
   const cadastrar = () => {
+
+    // Verifica se ja é existente
+    const usuarioExiste = user.find(
+      (u) => u.email === email
+    );
+
+    if(usuarioExiste){
+      alert("Login ja existente")
+      return false;
+    }
 
     // Verifica se o nome esta vazio ou contem numeros
     if (temNumero(nome) || nome === ""){
