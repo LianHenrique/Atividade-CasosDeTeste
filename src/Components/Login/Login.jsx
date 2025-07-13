@@ -52,23 +52,23 @@ const Login = () => {
           e.preventDefault();
         }}>
 
-          <input
-            className={styles.input}
-            type="email"
-            id="email"
-            // Coleta o email
-            onChange={(e) => setEmailInput(e.target.value)}
-            placeholder="E-mail"
-          />
+        <input
+          className={styles.input}
+          type="email"
+          id="email"
+          // Coleta o email
+          onChange={(e) => setEmailInput(e.target.value)}
+          placeholder="E-mail"
+        />
 
-          <input
-            className={styles.input}
-            type="password"
-            id="senha"
-            // Coleta a senha
-            onChange={(e) => setSenhaInput(e.target.value)}
-            placeholder="Password"
-          />
+        <input
+          className={styles.input}
+          type="password"
+          id="senha"
+          // Coleta a senha
+          onChange={(e) => setSenhaInput(e.target.value)}
+          placeholder="Password"
+        />
 
         <div
           className={styles.buttonGroup}>
