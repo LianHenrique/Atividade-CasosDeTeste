@@ -8,7 +8,7 @@ const Cadastro = () => {
     const savedUsers = localStorage.getItem("usuarios");
     return savedUsers ? JSON.parse(savedUsers) : [];
   });
-  
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -17,7 +17,7 @@ const Cadastro = () => {
   // Uma atualização feita quando a lista user muda de valor
   useEffect(() => {
     localStorage.setItem("usuarios", JSON.stringify(user));
-  },[user]);
+  }, [user]);
 
   const navigate = useNavigate();
 
@@ -46,18 +46,18 @@ const Cadastro = () => {
       (u) => u.email === email
     );
 
-    if(usuarioExiste){
+    if (usuarioExiste) {
       alert("Login ja existente")
       return false;
     }
 
     // Verifica se o nome esta vazio ou contem numeros
-    if (temNumero(nome) || nome === ""){
+    if (temNumero(nome) || nome === "") {
       alert("Nome invalido")
       return false;
     }
     // Verifica se o email é valido
-    if (validarEmail(email) != true || email === ""){
+    if (validarEmail(email) != true || email === "") {
       alert("Email invalido")
       return false;
     }
@@ -67,12 +67,12 @@ const Cadastro = () => {
       return false;
     }
     // Verifica de a senha não esta vazia
-    else if(senha === ""){
+    else if (senha === "") {
       alert("Senha invalida")
       return false;
     }
     // Verifica o tamanho da senha
-    else if(senha.length < 8){
+    else if (senha.length < 8) {
       alert("Senha Fraca (8 characteres ou mais)")
       return false;
     }
@@ -90,74 +90,77 @@ const Cadastro = () => {
     // Faz a alteração na lista
     setUser(updatedUsers);
 
-    alert(nome+ " cadastrado")
+    alert(nome + " cadastrado")
 
     // Navega até a tela de login
     navigate("/");
 
-  return true;
-}
+    return true;
+  }
 
   return (
-    <div 
-    className={styles.body}>
-      <h1 
-      className={styles.title}>
-        Cadastro
-        </h1>
-      <form 
-      className={styles.baseInput}
-      // Faz com que a tela não atualize
-      onSubmit={(e) => e.preventDefault()}>
+    <div
+      className={styles.body}>
+      <h1
+        className={styles.title}>
+        Sign up
+      </h1>
+      <form
+        className={styles.baseInput}
+        // Faz com que a tela não atualize
+        onSubmit={(e) => e.preventDefault()}>
 
-        <input 
-        className={styles.input} 
-        onChange={(e) => {
-          // Coleta o nome digitado
-          setNome(e.target.value)
-        }} 
-        type="text" 
-        placeholder="Nome"/>
+        <input
+          className={styles.input}
+          onChange={(e) => {
+            // Coleta o nome digitado
+            setNome(e.target.value)
+          }}
+          type="text"
+          placeholder="Name" />
 
-        <input 
-        className={styles.input} 
-        onChange={(e) => {
-          // Coleta o email digitado
-          setEmail(e.target.value)
-        }} 
-        type="text" 
-        placeholder="E-mail"/>
+        <input
+          className={styles.input}
+          onChange={(e) => {
+            // Coleta o email digitado
+            setEmail(e.target.value)
+          }}
+          type="text"
+          placeholder="E-mail" />
 
-        <input 
-        className={styles.input} 
-        onChange={(e) => {
-          // Coleta a senha digitada
-          setSenha(e.target.value)
-        }} 
-        type="password" 
-        placeholder="Senha"/>
+        <input
+          className={styles.input}
+          onChange={(e) => {
+            // Coleta a senha digitada
+            setSenha(e.target.value)
+          }}
+          type="password"
+          placeholder="Password" />
 
-        <input 
-        className={styles.input} 
-        onChange={(e) => {
-          // Coleta da confirmação de senha
-          setconfirmarSenha(e.target.value)
-        }} 
-        type="password" 
-        placeholder="Confirmação de Senha"/>
+        <input
+          className={styles.input}
+          onChange={(e) => {
+            // Coleta da confirmação de senha
+            setconfirmarSenha(e.target.value)
+          }}
+          type="password"
+          placeholder="Confirm password" />
 
-        <button 
-        className={styles.button} 
-        // Navegação para tela login
-        onClick={() => navigate("/")}>
-          Voltar
-        </button>
+        <div
+        className={styles.buttonGroup}>
+          <button
+            className={styles.button}
+            // Navegação para tela login
+            onClick={() => navigate("/")}>
+            Return
+          </button>
 
-        <button 
-        className={styles.button} 
-        onClick={cadastrar}>
-          Cadastrar
-        </button>
+          <button
+            className={styles.button}
+            onClick={cadastrar}>
+            register
+          </button>
+        </div>
       </form>
     </div>
   )

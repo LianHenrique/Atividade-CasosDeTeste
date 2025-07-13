@@ -27,66 +27,62 @@ const Login = () => {
     const usuarioExiste = user.find(
       (u) => u.email === emailInput && u.senha === senhaInput
     );
-    
+
     // Confirmação do find
     if (!usuarioExiste) {
       alert("Login inválido");
     }
-    else{
+    else {
       // Find returna o objeto encontrado com todos deus valores
-      alert("Bem vindo "+usuarioExiste.nome);
+      alert("Bem vindo " + usuarioExiste.nome);
     }
   };
 
   return (
-    <div 
-    className={styles.body}>
-      <h1 
-      className={styles.title}>
-        Login
+    <div
+      className={styles.body}>
+      <h1
+        className={styles.title}>
+        Sign in
       </h1>
-      <form 
-      className={styles.baseInput} 
-      // para a tela não recarregar
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}>
-        <div>
+      <form
+        className={styles.baseInput}
+        // para a tela não recarregar
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}>
+
           <input
-            className={styles.input} 
+            className={styles.input}
             type="email"
             id="email"
             // Coleta o email
             onChange={(e) => setEmailInput(e.target.value)}
             placeholder="E-mail"
           />
-        </div>
 
-        <div>
           <input
-            className={styles.input} 
+            className={styles.input}
             type="password"
             id="senha"
             // Coleta a senha
             onChange={(e) => setSenhaInput(e.target.value)}
-            placeholder="Senha"
+            placeholder="Password"
           />
+
+        <div
+          className={styles.buttonGroup}>
+          <button
+            className={styles.button}
+            type="submit"
+            onClick={logar}>
+            Enter
+          </button>
+          <a
+            href="/cadastro">
+            Sign up
+          </a>
         </div>
-        <button 
-        className={styles.button} 
-        type="submit" 
-        // Navega até o cadastro
-        onClick={() => {
-          navegate("/cadastro")
-        }}>
-          Cadastrar
-        </button>
-        <button 
-        className={styles.button} 
-        type="submit"
-        onClick={logar}>
-          Entrar
-        </button>
       </form>
     </div>
   );

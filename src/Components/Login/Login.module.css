@@ -1,7 +1,8 @@
 .body{
     background-color: rgb(160, 160, 160, 0.8);
-    height: 300px;
+    height: auto;
     width: 50%;
+    padding: 20px;
     max-width: 700px;
     min-width: 300px;
     border-radius: 25px ;
@@ -9,32 +10,53 @@
 }
 
 .title{
-    padding-top: 20px;
-    color: whitesmoke;
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 
 .baseInput{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .input{
     padding: 10px;
-    width: 80%;
+    width: 90%;
     border: none;
     border-radius: 5px;
-    margin: 10px;
+}
+
+.buttonGroup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 90%;
+    gap: 10px;
+
+    a{
+        text-align: initial;
+        width: 100%;
+        color: white;
+        font-size: 18px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
 }
 
 .button{
     padding: 10px;
-    width: 30%;
+    width: 100%;
     border: none;
     border-radius: 5px;
-    margin: 15px;
-    background-color: whitesmoke;
+    background-color: rgb(255, 255, 255);
+    margin-top: 30px;
 }
 
 .button:hover{
-    background-color: #ccc;
+    background-color: #d7d7d7;
 }
