@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./Login.module.css"
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -78,10 +78,10 @@ const Login = () => {
             onClick={logar}>
             Enter
           </button>
-          <a
-            href="/cadastro">
+          <Link
+            to="/cadastro">
             Sign up
-          </a>
+          </Link>
         </div>
       </form>
     </div>
