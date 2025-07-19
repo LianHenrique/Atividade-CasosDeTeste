@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Cadastro.module.css";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Cadastro = () => {
 
@@ -9,10 +10,12 @@ const Cadastro = () => {
     return savedUsers ? JSON.parse(savedUsers) : [];
   });
 
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarSenha, setconfirmarSenha] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch
+  } = useForm()
 
   // Uma atualização feita quando a lista user muda de valor
   useEffect(() => {
@@ -28,140 +31,132 @@ const Cadastro = () => {
     }
   }, []);
 
-  const temNumero = (str) => {
-    // Expressão regular para verificar se a string contém números
-    return /\d/.test(str);
+  const onSubmit = (data) => {
+    console.log(data)
+    setUser((prevUsers) => [...prevUsers, data]);
   }
 
-  const validarEmail = (email) => {
-    // Expressão regular para validar o formato do e-mail
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
-  };
-
-  const cadastrar = () => {
-
-    // Verifica se ja é existente
-    const usuarioExiste = user.find(
-      (u) => u.email === email
-    );
-
-    if (usuarioExiste) {
-      alert("Login ja existente")
-      return false;
-    }
-
-    // Verifica se o nome esta vazio ou contem numeros
-    if (temNumero(nome) || nome === "") {
-      alert("Nome invalido")
-      return false;
-    }
-    // Verifica se o email é valido
-    if (validarEmail(email) != true || email === "") {
-      alert("Email invalido")
-      return false;
-    }
-    // Verifica se a confirmação foi efetuada corretamente
-    if (senha != confirmarSenha) {
-      alert("Confirmação de senha invalida")
-      return false;
-    }
-    // Verifica de a senha não esta vazia
-    else if (senha === "") {
-      alert("Senha invalida")
-      return false;
-    }
-    // Verifica o tamanho da senha
-    else if (senha.length < 8) {
-      alert("Senha Fraca (8 characteres ou mais)")
-      return false;
-    }
-
-    // Adiciona o novo usuario como um item
-    const newUser = {
-      nome: nome,
-      email: email,
-      senha: senha
-    };
-
-    // Adiciona o newUser a lista user
-    const updatedUsers = [...user, newUser];
-
-    // Faz a alteração na lista
-    setUser(updatedUsers);
-
-    alert(nome + " cadastrado")
-
-    // Navega até a tela de login
-    navigate("/");
-
-    return true;
+  const onError = (erros) => {
+    console.log(erros)
   }
 
   return (
     <div
-      className={styles.body}>
-      <h1
-        className={styles.title}>
-        Sign up
-      </h1>
-      <form
-        className={styles.baseInput}
-        // Faz com que a tela não atualize
-        onSubmit={(e) => e.preventDefault()}>
+      style={{
+        height: "100vh",
+        alignContent: "center",
+        justifyItems: "center"
+      }}>
+      <div
+        className={styles.body}>
+        <h1
+          className={styles.title}>
+          Sign up
+        </h1>
+        <form
+          className={styles.baseInput}
+          // Faz com que a tela não atualize
+          onSubmit={handleSubmit(onSubmit, onError)}>
 
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            // Coleta o nome digitado
-            setNome(e.target.value)
-          }}
-          type="text"
-          placeholder="Name" />
+          <div className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Name"
+              {...register("nome", {
+                required: "O nome é obrigatório",
+                minLength: {
+                  value: 1,
+                  message: "O nome deve ter pelo menos 1 caracteres",
+                },
+                maxLength: {
+                  value: 20,
+                  message: "O nome deve ter ate 20 caracteres",
+                },
+              })} />
+            {
+              errors.nome &&
+              <p className="error">
+                {errors.nome.message}
+              </p>
+            }
+          </div>
 
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            // Coleta o email digitado
-            setEmail(e.target.value)
-          }}
-          type="text"
-          placeholder="E-mail" />
+          <div className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="E-mail"
+              {
+              ...register("email", {
+                required: "Email obrigatorio",
+                pattern: {
+                  value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                  message: "Email invalido"
+                },
+                validate: (value) => value.includes("@") || "Email invalido"
+              })} />
+            {
+              errors.email &&
+              <p className="error">
+                {errors.email.message}
+              </p>
+            }
+          </div>
 
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            // Coleta a senha digitada
-            setSenha(e.target.value)
-          }}
-          type="password"
-          placeholder="Password" />
+          <div className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="password"
+              placeholder="Password"
+              {
+              ...register("senha", {
+                required: "Senha é obrigatoria"
+              })
+              } />
+            {
+              errors.senha &&
+              <p className="error">
+                {errors.senha.message}
+              </p>
+            }
+          </div>
 
-        <input
-          className={styles.input}
-          onChange={(e) => {
-            // Coleta da confirmação de senha
-            setconfirmarSenha(e.target.value)
-          }}
-          type="password"
-          placeholder="Confirm password" />
+          <div className={styles.inputWrapper}>
+            <input
+              className={styles.input}
+              type="password"
+              placeholder="Confirm password"
+              {...register("confirmarSenha", {
+                required: "Confirmação de senha obrigatória",
+                validate: value =>
+                  value === watch("senha") || "As senhas não coincidem"
+              })} />
+            {
+              errors.confirmarSenha &&
+              <p className="error">
+                {errors.confirmarSenha.message}
+              </p>
+            }
+          </div>
 
-        <div
-        className={styles.buttonGroup}>
-          <button
-            className={styles.button}
-            // Navegação para tela login
-            onClick={() => navigate("/")}>
-            Return
-          </button>
+          <div
+            className={styles.buttonGroup}>
+            <button
+              className={styles.button}
+              // Navegação para tela login
+              onClick={() => navigate("/")}>
+              Return
+            </button>
 
-          <button
-            className={styles.button}
-            onClick={cadastrar}>
-            register
-          </button>
-        </div>
-      </form>
+            <button
+              className={styles.button}
+              type="submit">
+              register
+            </button>
+          </div>
+        </form>
+      </div >
     </div>
   )
 }
